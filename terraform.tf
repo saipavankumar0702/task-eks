@@ -27,7 +27,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "vprofileactions0702"
+    bucket = "automated-eks-storage-bucket-0702"
     key    = "terraform.tfstate"
     region = "ap-south-1"
   }
