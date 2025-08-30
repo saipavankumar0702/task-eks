@@ -5,31 +5,23 @@ module "eks" {
   cluster_name    = local.cluster_name
   cluster_version = "1.32"
 
-  vpc_id                         = module.vpc.vpc_id
-  subnet_ids                     = module.vpc.private_subnets
-  cluster_endpoint_public_access = true
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
 
-  eks_managed_node_group_defaults = {
-    ami_type = "AL2_x86_64"
-
-  }
-
-  eks_managed_node_groups = {
-    one = {
-      name = "node-group-1"
-
-      instance_types = ["t3.small"]
-
-      min_size     = 1
-      max_size     = 3
-      desired_size = 2
-    }
-  }
-  
   cluster_encryption_config = [
     {
       resources        = ["secrets"]
       provider_key_arn = aws_kms_key.jenkins_key.arn
     }
   ]
+
+  eks_managed_node_groups = {
+    one = {
+      name           = "node-group-1"
+      instance_types = ["t3.small"]
+      min_size       = 1
+      max_size       = 3
+      desired_size   = 2
+    }
+  }
 }
