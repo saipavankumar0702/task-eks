@@ -8,12 +8,11 @@ module "eks" {
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
-  cluster_encryption_config = [
-    {
-      resources        = ["secrets"]
-      provider_key_arn = aws_kms_key.jenkins_key.arn
-    }
-  ]
+  cluster_encryption_config = {
+  resources        = ["secrets"]
+  provider_key_arn = aws_kms_key.jenkins_key.arn
+}
+
 
   eks_managed_node_groups = {
     one = {
