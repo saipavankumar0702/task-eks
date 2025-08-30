@@ -1,5 +1,6 @@
 resource "aws_kms_key" "jenkins_key" {
   description = "KMS key for Jenkins Terraform use"
+  enable_key_rotation = true
 
   policy = <<EOF
 {
@@ -36,14 +37,4 @@ resource "aws_kms_key" "jenkins_key" {
     {
       "Sid": "Allow attachment of persistent resources",
       "Effect": "Allow",
-      "Principal": { "AWS": "arn:aws:iam::020895663109:user/jenkins" },
-      "Action": [
-        "kms:CreateGrant","kms:ListGrants","kms:RevokeGrant"
-      ],
-      "Resource": "*",
-      "Condition": { "Bool": { "kms:GrantIsForAWSResource": "true" } }
-    }
-  ]
-}
-EOF
-}
+      "Principal": { "AWS": "arn:aws:iam::020895663
