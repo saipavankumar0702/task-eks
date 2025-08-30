@@ -13,6 +13,9 @@ module "eks" {
   provider_key_arn = aws_kms_key.jenkins_key.arn
 }
 
+# Disable module’s own KMS key creation
+  create_kms_key = false
+
 
   eks_managed_node_groups = {
     one = {
