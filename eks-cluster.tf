@@ -25,4 +25,11 @@ module "eks" {
       desired_size = 2
     }
   }
+  
+  cluster_encryption_config = [
+    {
+      resources        = ["secrets"]
+      provider_key_arn = aws_kms_key.jenkins_key.arn
+    }
+  ]
 }
