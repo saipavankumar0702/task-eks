@@ -19,12 +19,15 @@ module "eks" {
     one = {
       name           = "node-group-1"
       instance_types = ["t3.small"]
-      min_size       = 1
-      max_size       = 3
-      desired_size   = 2
 
+      min_size     = 1
+      max_size     = 3
+      desired_size = 2
+
+      # Don’t let the module try to compute the CNI policy automatically
       iam_role_attach_cni_policy = false
 
+      # Explicitly attach the needed IAM policies
       iam_role_additional_policies = {
         eks_worker   = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
         ecr_readonly = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
