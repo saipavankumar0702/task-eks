@@ -23,6 +23,8 @@ module "eks" {
       max_size       = 3
       desired_size   = 2
 
+      iam_role_attach_cni_policy = false
+
       iam_role_additional_policies = {
         eks_worker   = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
         ecr_readonly = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
