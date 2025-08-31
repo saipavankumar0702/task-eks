@@ -29,7 +29,7 @@ resource "aws_kms_key" "jenkins_key" {
         Sid    = "AllowEKSClusterRoleFullAccess"
         Effect = "Allow"
         Principal = {
-          AWS = "arn:aws:iam::020895663109:role/eks-task-cluster-cluster-20250830155848025600000002"
+          AWS = "arn:aws:iam::020895663109:role/eksClusterGuardian"
         }
         Action   = "kms:*"
         Resource = "*"

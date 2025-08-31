@@ -10,7 +10,7 @@ module "eks" {
 
   cluster_encryption_config = {
   resources        = ["secrets"]
-  provider_key_arn = aws_kms_key.jenkins_key.arn
+  provider_key_arn = aws_kms_key.jenkins_key.key_arn
 }
 
 # Disable module’s own KMS key creation
@@ -26,4 +26,5 @@ module "eks" {
       desired_size   = 2
     }
   }
+  depends_on = [aws_kms_key.jenkins_key]
 }
