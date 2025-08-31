@@ -8,7 +8,6 @@ module "eks" {
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
-  # Enable secrets encryption using your custom KMS key
   cluster_encryption_config = {
     resources        = ["secrets"]
     provider_key_arn = aws_kms_key.jenkins_key.arn
@@ -24,14 +23,13 @@ module "eks" {
       max_size       = 3
       desired_size   = 2
 
-      iam_role_additional_policies = [
-        "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
-        "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
-        "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-      ]
+      iam_role_additional_policies = {
+        eks_worker   = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+        ecr_readonly = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+        eks_cni      = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+      }
     }
   }
 
-  # Ensure KMS key is created before EKS cluster
   depends_on = [aws_kms_key.jenkins_key]
 }
